@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<project name="X" default="buildAll"><description>stub script to create a jar</description>
+ <target name="buildAll"><ant antfile="../bdk/binaryjar.xml" /></target>
+</project>

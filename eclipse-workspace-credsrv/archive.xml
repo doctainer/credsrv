@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<project name="X" default="buildAll">
+ <description>
+  archive the project folder
+ </description>
+ 
+ <target name="buildAll">
+  <property file="${user.home}/.bdk" />
+  <ant antfile="${bdk_home}/archive.xml" />
+ </target>
+ 
+</project>
