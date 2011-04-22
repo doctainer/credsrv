@@ -2,7 +2,7 @@
  IncludesSuffix.java -- <br/>(C) doctainer 2001-2007<br/><br/>
  This file is part of doctainer io.
 */
-package com.doctainer.credsrv;
+package com.doctainer.credsrv.impl;
 
 import java.io.File;
 import java.io.FilenameFilter;

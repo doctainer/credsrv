@@ -2,7 +2,7 @@
  CredentialServerImpl.java -- <br/>(C) doctainer 2001-2007<br/><br/>
  This file is part of doctainer kungfu.
  */
-package com.doctainer.credsrv;
+package com.doctainer.credsrv.impl;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -14,24 +14,38 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 
-class CredentialServerImpl implements CredentialServer {
+import com.doctainer.credsrv.CredentialServer;
+
+/*
+ *  This {@link CredentialServer} 
+ *  implementation class builds up a key value store during initialization.
+ */
+public class CredentialServerImpl implements CredentialServer {
  final Map<String, String> credMap;
 
- CredentialServerImpl(String propertyPath) throws IOException {
+ public CredentialServerImpl(String propertyPath) throws IOException {
   credMap = createCredMap(propertyPath);
  }
 
  /**
   * implements {@link CredentialServer}
+  * <p>
+  *  Produces a map based on credMap and a pkey. This {@link CredentialServer} 
+  *  implementation class builds up a key value store during initialization.
+  *  
+  *  match keys of credMap.  
+  * </p>
+  * @param pkey - denotes a prefix 
+  * 
   */
- public Map<String, String> getCredentials(String key) throws IOException {
+ public Map<String, String> getCredentials(String pkey) throws IOException {
   Map<String, String> result = new HashMap<String, String>();
   Iterator<Map.Entry<String, String>> iter = credMap.entrySet().iterator();
   while (iter.hasNext()) {
    Map.Entry<String, String> item = iter.next();
-   String itemKey = (String) item.getKey();
-   if (itemKey.startsWith(key)) {
-    int keyl = key.length();
+   String itemKey = item.getKey();
+   if (itemKey.startsWith(pkey)) {
+    int keyl = pkey.length();
     int itemKeyl = itemKey.length();
     if (keyl < itemKeyl && itemKey.charAt(keyl) == '.') {
      String resultKey = new String(itemKey.substring(keyl + 1));
@@ -42,14 +56,14 @@ class CredentialServerImpl implements CredentialServer {
   return result;
  }
 
- static private Map<String, String> createCredMap(String propertyPath) throws IOException {
+ private static Map<String, String> createCredMap(String propertyPath) throws IOException {
   Map<String, String> result = new HashMap<String, String>();
   accumulateCredMap(result, propertyPath);
   return result;
  }
 
- static private void accumulateCredMap(Map<String, String> result, String propertyPath) throws IOException {
-  // first scan special syntax:
+ private static void accumulateCredMap(Map<String, String> result, String propertyPath) throws IOException {
+  // scan special syntax:
   int lastIdxOfSlash = lastIndexOfSlash(propertyPath);
   if (lastIdxOfSlash != -1) {
    int lastIdxOfStar = propertyPath.lastIndexOf('*');
@@ -117,7 +131,7 @@ class CredentialServerImpl implements CredentialServer {
     // getCredentials(key) method to get all key-value pairs of all scanned
     // files named PRODL.properties 
     String propertyPrefix = suffix == null ? fileName : fileName.substring(0,fileName.length()-suffixLen);
-    accumulateProperties(result,  propertyPrefix, props);
+    accumulateProperties(result, props, propertyPrefix);
    } // for - scanning through directory
   } // for
  }
@@ -156,7 +170,7 @@ class CredentialServerImpl implements CredentialServer {
    result.put(propKey, propValue);
   }
  }
- private static void accumulateProperties(Map<String, String> result,  String prefix, Properties props) {
+ private static void accumulateProperties(Map<String, String> result, Properties props, String prefix) {
   Enumeration enum_ = props.propertyNames();
   while (enum_.hasMoreElements()) {
    String propKey = (String) enum_.nextElement();
