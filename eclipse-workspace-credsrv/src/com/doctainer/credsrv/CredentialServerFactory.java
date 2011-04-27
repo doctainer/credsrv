@@ -7,7 +7,7 @@ package com.doctainer.credsrv;
 import java.io.IOException;
 import java.util.Map;
 
-import com.doctainer.credsrv.impl.CredentialServerImpl;
+import com.doctainer.credsrv.impl.ScatteredProps;
 /**
  * 
  *
@@ -27,7 +27,7 @@ public class CredentialServerFactory {
   "usr/credsrv.properties";
 
  public static CredentialServer getCredentialServer() throws IOException{
-  return new CredentialServerImpl(propertyPath);
+  return new ScatteredProps(propertyPath);
  }
  
  /**
@@ -38,7 +38,7 @@ public class CredentialServerFactory {
   * @throws IOException
   */
  public static CredentialServer getCredentialServer(String configString) throws IOException{
-  return new CredentialServerImpl(configString);
+  return new ScatteredProps(configString);
  }
  
  public static void main(String[] args) throws IOException {

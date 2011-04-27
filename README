@@ -1,0 +1,8 @@
+The idea of this project is to enable scripts to update secured environments without hard coding credentials into scripts or
+ entering credentials on each run of a script.
+ 
+ The purpose of a credential server
+ ----------------------------------
+ Deployment scripts that install or update software on a production server in a production environment most often require credentials to
+ access that environment. The purpose of a credential server is to provide those credentials to a script or to any other instance that requires
+ credentials to access a certain environment.

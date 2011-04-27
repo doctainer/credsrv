@@ -17,35 +17,49 @@ import java.util.Properties;
 import com.doctainer.credsrv.CredentialServer;
 
 /*
- *  This {@link CredentialServer} 
- *  implementation class builds up a key value store during initialization.
+ *  This {@link CredentialServer} implementation picks up a set of property files each of which containing credential information. 
+ *  One such property file may reside on your hard disk, another may be located on another device like a usb stick.
+ *  If you have more than one file on different devices you can arrange that a whole secret is scattered
+ *  to all the files, so the access to only one device won't reveal the secret.
+ *  The format for keys and values in property files is as follows
+ *  <Env>.<Real Key> = <Value>
+ *  <Env> names the deployment target like PROD or whatever you choose.
+ *  <Real Key> denotes a key like "password"
+ *  <Value> denotes the value or part of it.
+ *  For instance, if you have
+ *  PROD.password = wert
+ *  in a property file
+ *  and ask the credential server for credentials of PROD then 
+ *  you will get a map which maps "password" to "wert".
+ *  And if you have 
+ *  PROD.password = 123 
+ *  in another file, then you will get a map which maps "password" to "wert123" or to "123wert".
+ *  Wether you get "wert123" or "123wert" depends on which of the property files comes first: currently property files are scanned
+ *  in order of increasing drive letters.
  */
-public class CredentialServerImpl implements CredentialServer {
+public class ScatteredProps implements CredentialServer {
  final Map<String, String> credMap;
 
- public CredentialServerImpl(String propertyPath) throws IOException {
+ public ScatteredProps(String propertyPath) throws IOException {
   credMap = createCredMap(propertyPath);
  }
 
  /**
   * implements {@link CredentialServer}
   * <p>
-  *  Produces a map based on credMap and a pkey. This {@link CredentialServer} 
-  *  implementation class builds up a key value store during initialization.
-  *  
-  *  match keys of credMap.  
+  *  Produces a map based on credMap and the name of a deployment target.   
   * </p>
-  * @param pkey - denotes a prefix 
+  * @param deploymentTargetName - denotes a deployment target
   * 
   */
- public Map<String, String> getCredentials(String pkey) throws IOException {
+ public Map<String, String> getCredentials(String deploymentTargetName) throws IOException {
   Map<String, String> result = new HashMap<String, String>();
   Iterator<Map.Entry<String, String>> iter = credMap.entrySet().iterator();
   while (iter.hasNext()) {
    Map.Entry<String, String> item = iter.next();
    String itemKey = item.getKey();
-   if (itemKey.startsWith(pkey)) {
-    int keyl = pkey.length();
+   if (itemKey.startsWith(deploymentTargetName)) {
+    int keyl = deploymentTargetName.length();
     int itemKeyl = itemKey.length();
     if (keyl < itemKeyl && itemKey.charAt(keyl) == '.') {
      String resultKey = new String(itemKey.substring(keyl + 1));
