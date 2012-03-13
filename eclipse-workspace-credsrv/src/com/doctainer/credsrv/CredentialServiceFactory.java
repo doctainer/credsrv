@@ -21,12 +21,12 @@ import com.doctainer.credsrv.impl.ScatteredProps;
  *  <li>jm711credential-server-config
  * <ul>
  */
-public class CredentialServerFactory {
+public class CredentialServiceFactory {
  private static final String propertyPath= 
   // "/programme_wa/ldapbrowser/*.cfg";
   "usr/credsrv.properties";
 
- public static CredentialServer getCredentialServer() throws IOException{
+ public static CredentialService getCredentialService() throws IOException {
   return new ScatteredProps(propertyPath);
  }
  
@@ -34,16 +34,12 @@ public class CredentialServerFactory {
   * <h3>Description</h3>
   * <p>Create a credential server that scans all available drives ...</p>
   * @param configString
-  * @return
+  * @return implementation of CredentialServer
   * @throws IOException
   */
- public static CredentialServer getCredentialServer(String configString) throws IOException{
+ public static CredentialService getCredentialService(String configString) throws IOException{
   return new ScatteredProps(configString);
  }
  
- public static void main(String[] args) throws IOException {
-  CredentialServer cs = getCredentialServer();
-  Map<String, String> result = cs.getCredentials("PRODL");
-  System.out.println(result);
- }
+ 
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<project name="X" default="buildAll"><description>stub script to create a jar and deploy it to bdk</description>
+ <target name="buildAll">
+ 	<property file="${user.home}/.bdk" />
+ 	<ant antfile="${bdk_home}/patchbdk.xml" />
+ </target>
+</project>

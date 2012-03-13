@@ -13,10 +13,11 @@ import java.util.Map;
  * @author maushake
  * 
  * <pre>
+ *  #dt1109-crdsrv
  *  #dt1104-inapprehensible
  * </pre>
  */
-public interface CredentialServer {
+public interface CredentialService {
  /**
   * <h3>Purpose</h3>
   * <p>Return credentials needed to access a deployment target - this may be anything for instance a web site or a certain backend system or whatsoever</p>	

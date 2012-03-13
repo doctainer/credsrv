@@ -14,7 +14,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 
-import com.doctainer.credsrv.CredentialServer;
+import com.doctainer.credsrv.CredentialService;
 
 /*
  *  This {@link CredentialServer} implementation picks up a set of property files each of which containing credential information. 
@@ -37,7 +37,7 @@ import com.doctainer.credsrv.CredentialServer;
  *  Wether you get "wert123" or "123wert" depends on which of the property files comes first: currently property files are scanned
  *  in order of increasing drive letters.
  */
-public class ScatteredProps implements CredentialServer {
+public class ScatteredProps implements CredentialService {
  final Map<String, String> credMap;
 
  public ScatteredProps(String propertyPath) throws IOException {

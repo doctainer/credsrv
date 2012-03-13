@@ -1,8 +1,17 @@
-The idea of this project is to enable scripts to update secured environments without hard coding credentials into scripts or
+ 
+ Purpose
+ -------
+ Enable (ANT) scripts to update secured environments without hard coding credentials into those scripts or
  entering credentials on each run of a script.
  
- The purpose of a credential server
- ----------------------------------
+ Credential Server
+ -----------------
  Deployment scripts that install or update software on a production server in a production environment most often require credentials to
- access that environment. The purpose of a credential server is to provide those credentials to a script or to any other instance that requires
+ access that environment. A credential server is a component which provides those credentials to scripts or to any other instance that requires
  credentials to access a certain environment.
+ 
+ The goal is to keep credentials out of scripts which access secured enironments like a production server in a production environment.
+ 
+ 
+ 
+ 
