@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<project name="X" default="buildAll"><description>stubstub script to copy other sources into this project</description>
- <target name="buildAll">
- 	<property file="${user.home}/.bdk" />
- 	<ant antfile="${bdk_home}/includeList.xml" />
- </target>
-</project>
