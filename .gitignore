@@ -1,5 +1,7 @@
 #java specific
 *.class
+
+# old script stubs
 backup.py
 */build.number
 
